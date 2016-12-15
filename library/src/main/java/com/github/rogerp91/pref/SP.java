@@ -38,9 +38,9 @@ public class SP {
     }
 
     /**
-     * @param context
-     * @param prefsName
-     * @param mode
+     * @param context   @{@link Context}
+     * @param prefsName Name Preferences
+     * @param mode      @{@link Context#MODE_PRIVATE}
      */
     private static void initPrefs(@NonNull Context context, @NonNull String prefsName, int mode) {
         Utils.checkNotNull(context);
