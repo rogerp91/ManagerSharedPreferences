@@ -12,6 +12,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.github.rogerp91.pref.Utils.checkModePreference;
+import static com.github.rogerp91.pref.Utils.checkNotEmtry;
+import static com.github.rogerp91.pref.Utils.checkNotNull;
+
 /**
  * Created by roger on 07/11/16.
  */
@@ -33,7 +37,7 @@ public class SP {
      */
     @Deprecated
     public static void initPrefs(@NonNull Context context) {
-        Utils.checkNotNull(context);
+        checkNotNull(context, "Context can not be null");
         new Builder().setContext(context).build();
     }
 
@@ -43,8 +47,9 @@ public class SP {
      * @param mode      @{@link Context#MODE_PRIVATE}
      */
     private static void initPrefs(@NonNull Context context, @NonNull String prefsName, int mode) {
-        Utils.checkNotNull(context);
-        Utils.checkNotEmtry(prefsName);
+        checkNotNull(context, "Context can not be null");
+        checkNotNull(prefsName, "Shared preference can not be null");
+        checkNotEmtry(prefsName, "Shared preference name");
         mPrefs = context.getSharedPreferences(prefsName, mode);
     }
 
@@ -81,7 +86,7 @@ public class SP {
      * @see SharedPreferences#getInt(String, int)
      */
     public static int getInt(@NonNull final String key, final int defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getInt(key, defValue);
     }
 
@@ -92,7 +97,7 @@ public class SP {
      * is not an int.
      */
     public static int getInt(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getInt(key, 0);
     }
 
@@ -105,7 +110,7 @@ public class SP {
      * @see SharedPreferences#getBoolean(String, boolean)
      */
     public static boolean getBoolean(@NonNull final String key, final boolean defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getBoolean(key, defValue);
     }
 
@@ -116,7 +121,7 @@ public class SP {
      * is not a boolean.
      */
     public static boolean getBoolean(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getBoolean(key, false);
     }
 
@@ -129,7 +134,7 @@ public class SP {
      * @see SharedPreferences#getLong(String, long)
      */
     public static long getLong(@NonNull final String key, final long defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getLong(key, defValue);
     }
 
@@ -140,7 +145,7 @@ public class SP {
      * is not a long.
      */
     public static long getLong(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getLong(key, 0);
     }
 
@@ -157,7 +162,7 @@ public class SP {
      * @see SharedPreferences#getBoolean(String, boolean) (String, long)
      */
     public static double getDouble(@NonNull final String key, final double defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return Double.longBitsToDouble(getPreferences().getLong(key, Double.doubleToLongBits(defValue)));
     }
 
@@ -171,7 +176,7 @@ public class SP {
      * is not a long.
      */
     public static double getDouble(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return Double.longBitsToDouble(getPreferences().getLong(key, 0));
     }
 
@@ -184,7 +189,7 @@ public class SP {
      * @see SharedPreferences#getFloat(String, float)
      */
     public static float getFloat(@NonNull final String key, final float defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getFloat(key, defValue);
     }
 
@@ -195,7 +200,7 @@ public class SP {
      * is not a float.
      */
     public static float getFloat(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getFloat(key, 0);
     }
 
@@ -208,7 +213,7 @@ public class SP {
      * @see SharedPreferences#getString(String, String)
      */
     public static String getString(@NonNull final String key, final String defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getString(key, defValue);
     }
 
@@ -219,7 +224,7 @@ public class SP {
      * is not a String.
      */
     public static String getString(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().getString(key, "");
     }
 
@@ -235,7 +240,7 @@ public class SP {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @NonNull
     public static Set<String> getStringSet(@NonNull final String key, @NonNull final Set<String> defValue) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         SharedPreferences prefs = getPreferences();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             return prefs.getStringSet(key, defValue);
@@ -261,7 +266,7 @@ public class SP {
      * @see Editor#putLong(String, long)
      */
     public static void putLong(@NonNull final String key, final long value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putLong(key, value);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -277,7 +282,7 @@ public class SP {
      * @see Editor#putInt(String, int)
      */
     public static void putInt(@NonNull final String key, final int value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putInt(key, value);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -295,7 +300,7 @@ public class SP {
      * @see Editor#putLong(String, long)
      */
     public static void putDouble(@NonNull final String key, final double value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putLong(key, Double.doubleToRawLongBits(value));
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -311,7 +316,7 @@ public class SP {
      * @see Editor#putFloat(String, float)
      */
     public static void putFloat(@NonNull final String key, final float value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putFloat(key, value);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -327,7 +332,7 @@ public class SP {
      * @see Editor#putBoolean(String, boolean)
      */
     public static void putBoolean(@NonNull final String key, final boolean value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putBoolean(key, value);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -343,7 +348,7 @@ public class SP {
      * @see Editor#putString(String, String)
      */
     public static void putString(@NonNull final String key, final String value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         editor.putString(key, value);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
@@ -361,7 +366,7 @@ public class SP {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void putStringSet(@NonNull final String key, @NonNull final Set<String> value) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         final Editor editor = getPreferences().edit();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             editor.putStringSet(key, value);
@@ -395,7 +400,7 @@ public class SP {
      * @see Editor#remove(String)
      */
     public static void remove(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         SharedPreferences prefs = getPreferences();
         final Editor editor = prefs.edit();
         if (prefs.contains(key + LENGTH)) {
@@ -423,7 +428,7 @@ public class SP {
      * @see SharedPreferences#contains(String)
      */
     public static boolean contains(@NonNull final String key) {
-        Utils.checkNotEmtry(key);
+        checkNotEmtry(key, "Requires the name of the preference to retrieve");
         return getPreferences().contains(key);
     }
 
@@ -469,7 +474,7 @@ public class SP {
          */
         @NonNull
         public Builder setPrefsName(@NonNull final String prefsName) {
-            Utils.checkNotEmtry(prefsName);
+            checkNotEmtry(prefsName, "Requires the name of the preference to retrieve");
             mKey = prefsName;
             return this;
         }
@@ -482,7 +487,7 @@ public class SP {
          */
         @NonNull
         public Builder setContext(@NonNull final Context context) {
-            Utils.checkNotNull(context);
+            checkNotNull(context, "Context can not be null");
             mContext = context;
             return this;
         }
@@ -498,12 +503,8 @@ public class SP {
         @SuppressWarnings("deprecation")
         @NonNull
         public Builder setMode(@NonNull final int mode) {
-            if (mode == ContextWrapper.MODE_PRIVATE || mode == ContextWrapper.MODE_WORLD_READABLE || mode == ContextWrapper.MODE_WORLD_WRITEABLE || mode == ContextWrapper.MODE_MULTI_PROCESS) {
-                mMode = mode;
-            } else {
-                throw new RuntimeException("The mode in the sharedpreference can only be set too ContextWrapper.MODE_PRIVATE, ContextWrapper.MODE_WORLD_READABLE, ContextWrapper.MODE_WORLD_WRITEABLE or ContextWrapper.MODE_MULTI_PROCESS");
-            }
-
+            checkModePreference(mode);
+            mMode = mode;
             return this;
         }
 
@@ -533,7 +534,7 @@ public class SP {
                 throw new RuntimeException("Context not set, please set context before building the SP instance.");
             }
 
-            Utils.checkNotEmtry(mKey);
+            checkNotEmtry(mKey, "Requires the name of the preference to retrieve");
             mKey = mContext.getPackageName();
 
             if (mUseDefault) {
